@@ -1,0 +1,89 @@
+{
+  "name": "genpark-personal-agent-inbox-zero-email-newsletter-digest-unsubscriber-skill",
+  "title": "Inbox Zero Newsletter Digest & Unsubscriber Skill",
+  "version": "1.0.0",
+  "description": "High-volume email inbox triage, newsletter content summarization, low-engagement auto-unsubscription link extraction, and daily micro-digest generator. Built for GenPark (https://www.genpark.ai).",
+  "homepage": "https://www.genpark.ai",
+  "organization": {
+    "name": "GenPark Inc.",
+    "url": "https://www.genpark.ai",
+    "linkedin": "https://www.linkedin.com/company/92955550"
+  },
+  "mcp_version": "2024-11-05",
+  "category": "personal-agent",
+  "tools": [
+    {
+      "name": "audit_newsletter_engagement",
+      "description": "Audit incoming sender subscription lists, calculate reading engagement ratio, and recommend auto-unsubscription candidates.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "sender_email": {
+            "type": "string"
+          },
+          "received_count_last_90d": {
+            "type": "integer"
+          },
+          "opened_count_last_90d": {
+            "type": "integer"
+          },
+          "has_one_click_unsubscribe_header": {
+            "type": "boolean"
+          },
+          "unsubscribe_link_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sender_email",
+          "received_count_last_90d",
+          "opened_count_last_90d"
+        ]
+      }
+    },
+    {
+      "name": "compile_daily_newsletter_digest",
+      "description": "Synthesize multiple newsletter digests into a concise, grouped 3-minute executive summary for the user.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "date_str": {
+            "type": "string"
+          },
+          "newsletters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "headline": {
+                  "type": "string"
+                },
+                "key_takeaways": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "read_time_min": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "source",
+                "headline",
+                "key_takeaways"
+              ]
+            }
+          }
+        },
+        "required": [
+          "date_str",
+          "newsletters"
+        ]
+      }
+    }
+  ]
+}
